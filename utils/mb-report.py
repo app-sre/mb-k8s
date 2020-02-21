@@ -54,6 +54,13 @@ latencies_pctls = statistics.quantiles(latencies, n=100)
 total_duration = (max(end_times) - int(first_request[0])) / 1e6
 status_codes_count = ",".join([ "%s:%s" % (k,v) for k,v in status.items() ])
 
+error_set = {}
+for error in errors:
+    if error in error_set:
+        error_set[error] += 1
+    else:
+        error_set[error] = 1
+
 values = {
     'total_requests': total_requests,
     'request_rate': round(total_requests / attack_duration, 2),
@@ -71,7 +78,7 @@ values = {
     'bytes_out_mean': 0,
     'success_ratio': 0,
     'status_codes_count': status_codes_count,
-    'error_set': "\n".join(errors)
+    'error_set': "\n".join(["%s:%s" % (k,v) for k,v in error_set.items()])
 }
 
 print(TEMPLATE % values)
