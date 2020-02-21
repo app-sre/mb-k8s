@@ -37,8 +37,8 @@ spec:
               mountPath: /temp-dir
             {{- end }}
             - name: mb-request-file
-              mountPath: /opt/request-file.json
-              subPath: request-file.json
+              mountPath: /opt/{{ default "request-file.json" .Values.app.requestConfigMapSubPath }}
+              subPath: {{ default "request-file.json" .Values.app.requestConfigMapSubPath }}
           env:
             {{- if .Values.app.storeOutput }}
             - name: STORE_OUTPUT
@@ -65,7 +65,7 @@ spec:
                   fieldPath: metadata.name
              {{- end }}
             - name: REQUEST_FILE
-              value: "/opt/request-file.json"
+              value: "/opt/{{ default "request-file.json" .Values.app.requestConfigMapSubPath }}"
             - name: DURATION
               value: "{{ required "missing app.duration" .Values.app.duration }}"
             - name: RAMP_UP
