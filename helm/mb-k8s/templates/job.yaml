@@ -27,6 +27,18 @@ spec:
         - name: mb-request-file
           configMap:
             name: {{ required "Missing app.requestConfigMap" .Values.app.requestConfigMap }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: job-name
+                  operator: In
+                  values:
+                  - {{ include "mb-k8s.fullname" . }}
+              topologyKey: kubernetes.io/hostname
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{- if .Values.image.tag -}}{{ .Values.image.tag }}{{- else -}}{{ .Chart.AppVersion }}{{- end -}}"
@@ -76,10 +88,6 @@ spec:
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-    {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
     {{- with .Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
