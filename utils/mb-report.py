@@ -28,13 +28,13 @@ with lzma.open(results_file) as f:
         end_times.append(int(fields[0]) + int(fields[1]))
         bytes_in.append(int(fields[4]))
         bytes_out.append(int(fields[3]))
-        if lines[2] in status:
-            status[lines[2]] += 1
+        if fields[2] in status:
+            status[fields[2]] += 1
         else:
-            status[lines[2]] = 1
+            status[fields[2]] = 1
 
-        if lines[14]:
-            errors.append(lines[14])
+        if fields[14]:
+            errors.append(fields[14])
 
 
 TEMPLATE = '''
@@ -52,6 +52,7 @@ total_requests = len(latencies)
 attack_duration = (int(last_request[0]) - int(first_request[0])) / 1e6
 latencies_pctls = statistics.quantiles(latencies, n=100)
 total_duration = (max(end_times) - int(first_request[0])) / 1e6
+status_codes_count = ",".join([ "%s:%s" % (k,v) for k,v in status.items() ])
 
 values = {
     'total_requests': total_requests,
@@ -69,8 +70,8 @@ values = {
     'bytes_out_total': 0,
     'bytes_out_mean': 0,
     'success_ratio': 0,
-    'status_codes_count': 0,
-    'error_set': ''
+    'status_codes_count': status_codes_count,
+    'error_set': "\n".join(errors)
 }
 
 print(TEMPLATE % values)
