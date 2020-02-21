@@ -52,7 +52,7 @@ CMD="mb --duration $DURATION --request-file $REQUEST_FILE"
 [[ -n "$RAMP_UP" ]] && CMD="$CMD --ramp-up $RAMP_UP"
 [[ -n "$THREADS" ]] && CMD="$CMD --threads $THREADS"
 if [[ -n "$STORE_OUTPUT" ]]; then
-    RESPONSE_FILE="$TEMP_DIR/mb-results-$POD_NAME-$(date +%Y%m%d_%H%M%S).bin"
+    RESPONSE_FILE="$TEMP_DIR/mb-results-$POD_NAME-$(date +%Y%m%d_%H%M%S).csv"
     CMD="$CMD --response-file $RESPONSE_FILE"
     trap copy_response_file INT TERM
 fi
