@@ -68,6 +68,8 @@ spec:
               value: "/opt/request-file.json"
             - name: DURATION
               value: "{{ required "missing app.duration" .Values.app.duration }}"
+            - name: RAMP_UP
+              value: "{{ default "0" .Values.app.rampUp }}"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
