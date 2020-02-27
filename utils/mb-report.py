@@ -52,7 +52,7 @@ with lzma.open(results_file) as f:
 TEMPLATE = '''
 Requests      [total, rate, throughput]  %(total_requests)s, %(request_rate)s, %(request_throughput)s
 Duration      [total, attack, wait]      %(total_duration)s, %(attack_duration)s
-Latencies     [mean, 50, 95, 99, max]    %(mean_latency)s, %(p50_latency)s, %(p95_latency)s, %(p99_latency)ss, %(max_latency)s
+Latencies     [mean, 50, 95, 99, max]    %(mean_latency)s, %(p50_latency)s, %(p95_latency)s, %(p99_latency)s, %(max_latency)s
 Bytes In      [total, mean]              %(bytes_in_total)s, %(bytes_in_mean)s
 Bytes Out     [total, mean]              %(bytes_out_total)s, %(bytes_out_mean)s
 Success       [ratio]                    %(success_ratio)s
