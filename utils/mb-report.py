@@ -67,8 +67,13 @@ total_duration = max(end_times) - int(first_request[0])
 status_codes_count = ",".join([ "%s:%s" % (k,v) for k,v in status.items() ])
 
 success_ratio = 0
+request_throughput = 0
 if "200" in status:
-    success_ratio = 100 * status["200"] / total_requests
+    success_ratio = round(100 * status["200"] / total_requests,
+                          ROUND_PRECISION)
+    request_throughput = round(status["200"] / (attack_duration/1e6),
+                               ROUND_PRECISION)
+
 
 error_set = {}
 for error in errors:
@@ -80,7 +85,7 @@ for error in errors:
 values = {
     'total_requests': total_requests,
     'request_rate': round(total_requests / (attack_duration/1e6), ROUND_PRECISION),
-    'request_throughput': "-",
+    'request_throughput': request_throughput,
     'attack_duration': format_microseconds(attack_duration),
     'total_duration': format_microseconds(total_duration),
     'mean_latency': format_microseconds(statistics.mean(latencies)),
