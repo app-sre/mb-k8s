@@ -1,6 +1,6 @@
 # mb k8s
 
-This is a quick wrapper of [mb  load tester](https://github.com/jmencak/mb) on a kubernetes job that can run in parallel. Once the jobs are done, the results will be sent into a S3 bucket but mb can consume multiple result files to create a single report or a single plot. The [runner script](./attack.sh) is prepared to sent partial results if process is terminated via `SIGINT` or `SIGTERM` but kubernetes seems to delete jobs forcibly and reports won't be sent to S3 in that case. At least, we have a kill switch for the tests.
+This is a quick wrapper of [mb  load tester](https://github.com/jmencak/mb) on a kubernetes job that can run in parallel. The job spec includes an antiaffinity rule to force the pods to be scheduled in different nodes. Once the jobs are done, the results will be sent into a S3 bucket but mb can consume multiple result files to create a single report or a single plot. The [runner script](./attack.sh) is prepared to sent partial results if process is terminated via `SIGINT` or `SIGTERM` but kubernetes seems to delete jobs forcibly and reports won't be sent to S3 in that case. At least, we have a kill switch for the tests.
 
 In order to run the tests, a helm v3 [chart](./helm/mb-k8s) has been provided. In order to deploy it:
 ```
