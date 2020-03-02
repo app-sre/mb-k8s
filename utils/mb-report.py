@@ -1,4 +1,6 @@
-# needs python 3.8.1
+#!/usr/bin/env python
+
+# needs at least python 3.8.0
 
 import sys
 import lzma
@@ -15,6 +17,10 @@ def format_microseconds(ms):
         return "%sμs" % ms
     elif ms < 1:
         return "%sns" % round(ms * 1e3, ROUND_PRECISION)
+
+if not len(sys.argv) == 2:
+    print("Usage: %s request-file.xz" % sys.argv[0])
+    sys.exit(1)
 
 results_file = sys.argv[1]
 
