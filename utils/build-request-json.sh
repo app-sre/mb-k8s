@@ -1,7 +1,20 @@
 #!/bin/bash
 
 function usage() {
-    echo "Usage: $0 -f targets-list-file [options]"
+    cat <<EOH
+Usage: $0 -f targets-list-file [options]
+
+where options are:
+   -f <file>        targets list
+   -t               tls session reuse (default: false)
+   -m <method>      request method (default: GET)
+   -b <size>        request body size (default: 128)
+   -k <requests>    keepalive requests (default: 100)
+   -c <connections> connections per target (default: 10)
+   -p <path>        url path (default: /)
+   -d <delay>       delay between requests in ms (default: 1000)
+   -h               shows this message
+EOH
     exit 1
 }
 
