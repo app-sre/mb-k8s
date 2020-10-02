@@ -5,7 +5,7 @@
 jobParallelism: 1
 
 image:
-  repository: rporres/mb-k8s
+  repository: quay.io/app-sre/mb-k8s
   pullPolicy: IfNotPresent
   # tag: tag-to-override-appVersion
 
